@@ -1,0 +1,65 @@
+<section class="appointment-section">
+  <div class="appointment-form">
+    <div class="appointment-form-header">
+      <i class="material-icons md-24">add_box</i>
+      NEW APPOINTMENT
+    </div>
+    <form id="loginForm" [formGroup]="newAppointment" (ngSubmit)="saveAppointment()">
+      <div>
+        <label for="pet">
+          Pet name
+        </label>
+        <input formControlName="pet" type="text" name="pet" id="pet">
+      </div>
+      <div *ngIf="submitted && newAppointment.controls.pet.errors" class="appointment-field-error">
+        <div *ngIf="newAppointment.controls.pet.errors.required">
+          Pet name is required.
+        </div>
+      </div>
+      <div>
+        <label for="type">
+          Appointment type
+        </label>
+        <select formControlName="type" name="type" id="type">
+          <option value="0" selected disabled hidden>Select type</option>
+          <option [ngValue]="type.id" *ngFor="let type of types">{{ type.type }}</option>
+        </select>
+      </div>
+      <div *ngIf="submitted && newAppointment.controls.type.errors" class="appointment-field-error">
+        <div *ngIf="newAppointment.controls.type.errors.required">
+          Appointment type is required.
+        </div>
+      </div>
+      <div class="appointment-form-group">
+        <div class="appointment-form-time">
+          <i class="material-icons md-24">alarm</i>
+          <select formControlName="time" name="time" id="time">
+            <option [ngValue]="time.hours" *ngFor="let time of appointmentTime">{{ time.clock }}</option>
+          </select>
+        </div>
+        <mat-form-field>
+          <input matInput formControlName="date" [min]="minDate" [matDatepicker]="picker" placeholder="Choose a date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div *ngIf="submitted && invalidTime">
+        Invalid time.
+      </div>
+      <div *ngIf="submitted && (newAppointment.controls.date.errors || newAppointment.controls.time.errors)" class="appointment-field-error">
+        <div *ngIf="newAppointment.controls.date.errors.required || newAppointment.controls.time.errors.required">
+          Date and time are required.
+        </div>
+      </div>
+      <div>
+        <label for="comment">
+          Comment
+        </label>
+        <textarea formControlName="comment" name="comment" id="comment" cols="30" rows="10"></textarea>
+      </div>
+      <div>
+        <input class="appointment-form-submit" type="submit" value="SUBMIT">
+      </div>
+    </form>
+  </div>
+</section>

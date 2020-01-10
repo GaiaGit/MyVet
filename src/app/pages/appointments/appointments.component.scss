@@ -1,0 +1,52 @@
+@import "../../../vars.scss";
+
+.appointments-list-container {
+  width: 100%;
+  max-width: 600px;
+}
+
+.appointments-list-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.appointments-list-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.appointments-list-row {
+  display: flex;
+  flex-direction: row;
+  background: $white;
+  padding: 10px;
+  margin-bottom: 5px;
+  font-size: .9rem;
+  align-items: center;
+
+  i {
+    margin-right: 10px;
+  }
+}
+
+.calendar-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.calendar-wrapper {
+  max-width: 600px;;
+}
+
+.appointment-type-emergency {
+  color:#ff036c;
+}
+.appointment-type-groom {
+ color:#09c3c3;
+}
+.appointment-type-routine {
+ color: #587cff;
+}

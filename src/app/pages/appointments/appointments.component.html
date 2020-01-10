@@ -1,0 +1,24 @@
+<div *ngIf="view==='list'" class="appointments-list-wrapper">
+<div class="appointments-list-container">
+  <div *ngIf="appointments !== [] > 0; else noResults" class="appointments-list">
+    <div *ngFor="let appoint of appointments" class="appointments-list-row">
+      <div>  
+        <i class="material-icons md-24 appointment-type-emergency" *ngIf="appoint.type === 2">label_important</i>
+        <i class="material-icons md-24 appointment-type-groom" *ngIf="appoint.type === 3">label_important</i>
+        <i class="material-icons md-24 appointment-type-routine" *ngIf="appoint.type === 1">label_important</i>
+      </div>
+      <div>{{ appoint.date | date:"mediumDate" }} {{ appoint.date | date: "shortTime" }}</div>
+      <div>{{ appoint.pet }}</div>
+      <div>{{ appoint.comment }}</div>
+    </div>
+  </div>
+  <ng-template #noResults>
+    {{ placeholder }}
+  </ng-template>
+</div>
+</div>
+<div class="calendar-container" *ngIf="view==='calendar' && calendarEvents.length > 0">
+  <div class="calendar-wrapper">
+    <full-calendar *ngIf="calendarEvents.length > 0" defaultView="dayGridMonth" [plugins]="calendarPlugins" [events]="calendarEvents" [fixedWeekCount]="false" [showNonCurrentDates]="false" (eventMouseEnter)="eventRender($event)"></full-calendar>
+  </div>
+</div>

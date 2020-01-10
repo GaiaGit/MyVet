@@ -1,0 +1,84 @@
+@import "../../../vars.scss";
+
+#section-login {
+  display: flex;
+  flex-direction: row;
+}
+
+.login-box {
+  flex-grow: 1;
+  justify-content: flex-end;
+  display: flex;
+  align-items: center;
+  background-image: url('../../../assets/imgs/hero-login.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.login-form-container {
+  box-sizing: border-box;
+  background-color: $white;
+  width: 350px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 5px 5px 5px rgba(0,0,0,.4);
+}
+
+.form-group {
+  width: 285px;
+  padding-bottom: 20px;
+  box-sizing: border-box;
+
+  label {
+    display: block;
+    color: $mgray;
+    font-size: 1.1rem;
+  }
+  input {
+    font-size: 1rem;
+    border: 1px solid $lgray;
+    padding: 7px;
+    width: 100%;
+  }
+}
+
+.login-button {
+  background-color: $orange;
+  color: $white;
+  border: none;
+  border-radius: 6px;
+  padding: 7px;
+  box-sizing: border-box;
+  width: 100%;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.login-filler {
+  padding: 15px 0;
+  font-style: italic;
+  color: $sub;
+}
+
+.login-error::first-letter {
+  text-transform: uppercase;
+
+  &::after {
+    content: '.';
+  }
+}
+
+@media screen and (max-width: $md-screen){
+ .hero-box {
+   display: none;
+ }
+}

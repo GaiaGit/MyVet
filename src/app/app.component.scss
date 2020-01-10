@@ -1,0 +1,15 @@
+@import "vars.scss";
+
+.nav-logout {
+    display: flex;
+    align-items: center;
+    color: $white;
+    background: transparent;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+
+    i {
+        padding-right: 5px;
+    }
+}
