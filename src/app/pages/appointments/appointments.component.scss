@@ -18,16 +18,27 @@
 
 .appointments-list-row {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   background: $white;
-  padding: 10px;
   margin-bottom: 5px;
+}
+
+.appointment-list-block {
+  display: flex;
+  flex-direction: row;
+  padding: 5px 10px;
   font-size: .9rem;
   align-items: center;
+  justify-content: space-between;
 
-  i {
-    margin-right: 10px;
-  }
+}
+
+.appointment-row-comment {
+  box-sizing: border-box;
+  border-top: 1px solid #d0d0d0;
+  padding: 10px;
+  font-size: .9rem;
+  color: #808080;
 }
 
 .calendar-container {
@@ -41,12 +52,56 @@
   max-width: 600px;;
 }
 
+.appointment-row-data {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-grow: 1;
+
+  i {
+    margin-right: 10px;
+  }
+}
+
 .appointment-type-emergency {
   color:#ff036c;
 }
+
 .appointment-type-groom {
  color:#09c3c3;
 }
+
 .appointment-type-routine {
  color: #587cff;
+}
+
+.appointment-list-pet {
+  font-weight: bold;
+  padding-left: 15px;
+}
+
+.appointment-list-date {
+  width: 35%;
+}
+
+.appointment-list-notify {
+  width: 35px;
+  color: #d0d0d0;
+  display: flex;
+  align-items: center;
+
+  i {
+    font-size: 1.4rem;
+  }
+}
+
+.appointment-row-details {
+  display: flex;
+  align-items: center;
+  color: #b0b0b0;
+  cursor: pointer;
+
+  i {
+    font-size: 2rem;
+  }
 }

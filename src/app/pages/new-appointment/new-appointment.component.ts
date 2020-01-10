@@ -108,6 +108,7 @@ export class NewAppointmentComponent implements OnInit {
     //let selectedDay=this.newAppointment.value.date.getDay();
     //let selectedMonth=this.newAppointment.value.date.getMonth();
     //let selectedYear=this.newAppointment.value.date.getYear();
+
     //this.appointmentsService.shared$(take(1))
     //.subscribe(data => {
     //  data.forEach(event => {
@@ -116,7 +117,7 @@ export class NewAppointmentComponent implements OnInit {
     //    let year = event.date.getYear()
     //    if(day === selectedDay && year === selectedYear && month === selectedMonth) return false;
     //    else return true;
-    //},error => {
+    //}),error => {
     //  console.log('Appointments data error')
     //})
   }

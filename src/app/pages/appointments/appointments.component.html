@@ -1,15 +1,31 @@
 <div *ngIf="view==='list'" class="appointments-list-wrapper">
 <div class="appointments-list-container">
   <div *ngIf="appointments !== [] > 0; else noResults" class="appointments-list">
-    <div *ngFor="let appoint of appointments" class="appointments-list-row">
-      <div>  
-        <i class="material-icons md-24 appointment-type-emergency" *ngIf="appoint.type === 2">label_important</i>
-        <i class="material-icons md-24 appointment-type-groom" *ngIf="appoint.type === 3">label_important</i>
-        <i class="material-icons md-24 appointment-type-routine" *ngIf="appoint.type === 1">label_important</i>
+    <div *ngFor="let appoint of appointments; trackBy: id" class="appointments-list-row">
+      <div class="appointment-list-block">
+        <div class="appointment-row-data">
+          <div>  
+            <i class="material-icons md-24 appointment-type-emergency" *ngIf="appoint.type === 2" title="Emergency">radio_button_checked</i>
+            <i class="material-icons md-24 appointment-type-groom" *ngIf="appoint.type === 3" title="Grooming">radio_button_checked</i>
+            <i class="material-icons md-24 appointment-type-routine" *ngIf="appoint.type === 1" title="Routine Check">radio_button_checked</i>
+          </div>
+          <div class="appointment-list-notify">
+            <i class="material-icons md-24" title="Comments" *ngIf="appoint.comment">sms</i>
+          </div>
+          <div class="appointment-list-date">
+            {{ appoint.date | date:"mediumDate" }} {{ appoint.date | date: "shortTime" }}
+          </div>
+          <div class="appointment-list-pet">
+            {{ appoint.pet }}
+          </div>
+        </div>
+        <div class="appointment-row-details" (click)="toggleComment(appoint.id)">
+          <i class="material-icons md-24" title="Show details">expand_more</i>
+        </div>
       </div>
-      <div>{{ appoint.date | date:"mediumDate" }} {{ appoint.date | date: "shortTime" }}</div>
-      <div>{{ appoint.pet }}</div>
-      <div>{{ appoint.comment }}</div>
+      <div class="appointment-row-comment" *ngIf="selectedEvent === appoint.id">
+        {{ appoint.comment || "No comments" }}
+      </div>
     </div>
   </div>
   <ng-template #noResults>

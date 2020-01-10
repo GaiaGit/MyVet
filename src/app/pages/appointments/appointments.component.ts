@@ -23,8 +23,9 @@ export class AppointmentsComponent implements OnInit {
   calendarEvents = [];
   placeholder: string = "No appointments found.";
   calendarPlugins = [dayGridPlugin];
+  selectedEvent:number;
 
-  constructor(private scheduleService: ScheduleService,private appointsmentService: AppointmentsService) {
+  constructor(private scheduleService: ScheduleService,private appointmentsService: AppointmentsService) {
     this.types = TYPES;
   }
 
@@ -32,8 +33,12 @@ export class AppointmentsComponent implements OnInit {
     this.getAppointmentList();
   }
 
-  shareEvents(appointments){
-    this.appointsmentService.share(this.appointments)
+  shareEvents(appointments:Appointment[]){
+    this.appointmentsService.share(this.appointments)
+  }
+
+  toggleComment(id){
+    this.selectedEvent = this.selectedEvent === id ? null : id
   }
 
   setEvents(data){
@@ -52,6 +57,7 @@ export class AppointmentsComponent implements OnInit {
     this.scheduleService.getAppointments().subscribe(
       data => {
         this.appointments = data;
+        //this.shareEvents(data)
         this.setEvents(data)
       },
       error => {
