@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 
 import { TYPES } from '@assets/data/core';
 
+import { AppointmentsService } from '@app/shared/services/appointment/appointments.service';
 import { ScheduleService } from '@app/shared/services/appointment/schedule.service';
 import { Appointment } from '@app/shared/model/appointment.interface';
 
@@ -79,6 +80,7 @@ export class NewAppointmentComponent implements OnInit {
 
   constructor(
     private scheduleService: ScheduleService,
+    private appointmentsService: AppointmentsService,
     private fb: FormBuilder,
     private router:Router) { }
 
@@ -103,7 +105,20 @@ export class NewAppointmentComponent implements OnInit {
   }
 
   validateDate() {
-
+    //let selectedDay=this.newAppointment.value.date.getDay();
+    //let selectedMonth=this.newAppointment.value.date.getMonth();
+    //let selectedYear=this.newAppointment.value.date.getYear();
+    //this.appointmentsService.shared$(take(1))
+    //.subscribe(data => {
+    //  data.forEach(event => {
+    //    let day = event.date.getDay()
+    //    let month = event.date.getMonth()
+    //    let year = event.date.getYear()
+    //    if(day === selectedDay && year === selectedYear && month === selectedMonth) return false;
+    //    else return true;
+    //},error => {
+    //  console.log('Appointments data error')
+    //})
   }
 
   validateTime(){

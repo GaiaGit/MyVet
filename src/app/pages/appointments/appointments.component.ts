@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import dayGridPlugin from '@fullcalendar/daygrid';
 
 import { ScheduleService } from '@app/shared/services/appointment/schedule.service';
+import { AppointmentsService } from '@app/shared/services/appointment/appointments.service';
 
 import { TYPES } from '@assets/data/core';
 import { Appointment } from '@app/shared/model/appointment.interface';
@@ -23,7 +24,7 @@ export class AppointmentsComponent implements OnInit {
   placeholder: string = "No appointments found.";
   calendarPlugins = [dayGridPlugin];
 
-  constructor(private scheduleService: ScheduleService) {
+  constructor(private scheduleService: ScheduleService,private appointsmentService: AppointmentsService) {
     this.types = TYPES;
   }
 
@@ -31,10 +32,8 @@ export class AppointmentsComponent implements OnInit {
     this.getAppointmentList();
   }
 
-  eventRender(info){
-  }
-
-  ngOnChanges(changes){
+  shareEvents(appointments){
+    this.appointsmentService.share(this.appointments)
   }
 
   setEvents(data){
