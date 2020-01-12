@@ -9,7 +9,7 @@ import { Appointment } from '@app/shared/model/appointment.interface';
 })
 export class ScheduleService {
 
-  apiUrl:string = "https://5e14ef4ebce1d10014baef24.mockapi.io/appointments"
+  apiUrl:string = "https://5e14ef4ebce1d10014baef24.mockapi.io/appointments?sortBy=date&order=desc"
 
   constructor(private http:HttpClient) { }
 

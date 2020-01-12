@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import dayGridPlugin from '@fullcalendar/daygrid';
 
 import { ScheduleService } from '@app/shared/services/appointment/schedule.service';
-import { AppointmentsService } from '@app/shared/services/appointment/appointments.service';
 
 import { TYPES } from '@assets/data/core';
 import { Appointment } from '@app/shared/model/appointment.interface';
@@ -24,8 +23,11 @@ export class AppointmentsComponent implements OnInit {
   placeholder: string = "No appointments found.";
   calendarPlugins = [dayGridPlugin];
   selectedEvent:number;
+  options={
+    footer: true
+  }
 
-  constructor(private scheduleService: ScheduleService,private appointmentsService: AppointmentsService) {
+  constructor(private scheduleService: ScheduleService) {
     this.types = TYPES;
   }
 
@@ -33,15 +35,15 @@ export class AppointmentsComponent implements OnInit {
     this.getAppointmentList();
   }
 
-  shareEvents(appointments:Appointment[]){
-    this.appointmentsService.share(this.appointments)
+  displayType(type:number){
+    return this.types[type-1].type;
   }
 
-  toggleComment(id){
+  toggleComment(id:number){
     this.selectedEvent = this.selectedEvent === id ? null : id
   }
 
-  setEvents(data){
+  setEvents(data:Appointment[]){
     data.forEach(ev =>{
       let evento = {
         title: ev.pet,
@@ -53,18 +55,18 @@ export class AppointmentsComponent implements OnInit {
     });
   }
 
+  showEventInfo(event){
+  }
+
   getAppointmentList(){
     this.scheduleService.getAppointments().subscribe(
       data => {
         this.appointments = data;
-        //this.shareEvents(data)
-        this.setEvents(data)
+        this.setEvents(data);
       },
       error => {
         this.placeholder = error.error;
       }
     )
   }
-
-
 }

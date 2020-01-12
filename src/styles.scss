@@ -40,6 +40,11 @@ main {
   background-color: $orange;
 }
 
+.section-wrapper {
+  background-color: $white;
+  padding: 50px 0 30px;
+}
+
 /* Calendar */
 
 .fc-view-container {
@@ -47,9 +52,20 @@ main {
 }
 
 .fc-toolbar h2 {
-  color: $white;
+  color: #2c3e50;
   font-size: 1.5rem;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.fc-toolbar.fc-header-toolbar {
+  background: #e7e7e7;
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+
+/* Screen media size */
+
+@media screen and (max-width: $md-screen){
+  html,body{
+    font-size: 14px;
+  }
+}

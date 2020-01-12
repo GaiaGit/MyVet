@@ -5,15 +5,16 @@
       <div class="appointment-list-block">
         <div class="appointment-row-data">
           <div>  
-            <i class="material-icons md-24 appointment-type-emergency" *ngIf="appoint.type === 2" title="Emergency">radio_button_checked</i>
-            <i class="material-icons md-24 appointment-type-groom" *ngIf="appoint.type === 3" title="Grooming">radio_button_checked</i>
-            <i class="material-icons md-24 appointment-type-routine" *ngIf="appoint.type === 1" title="Routine Check">radio_button_checked</i>
+            <i class="material-icons md-24" [ngClass]="{ 'appointment-type-emergency': appoint.type === 2, 'appointment-type-grooming': appoint.type === 3, 'appointment-type-routine': appoint.type === 1 }" title="{{displayType(appoint.type)}}">lens</i>
           </div>
           <div class="appointment-list-notify">
             <i class="material-icons md-24" title="Comments" *ngIf="appoint.comment">sms</i>
           </div>
           <div class="appointment-list-date">
-            {{ appoint.date | date:"mediumDate" }} {{ appoint.date | date: "shortTime" }}
+            {{ appoint.date | date:"mediumDate" }}
+          </div>
+          <div class="appointment-list-time">
+            {{ appoint.date | date: "shortTime" }}
           </div>
           <div class="appointment-list-pet">
             {{ appoint.pet }}
@@ -35,6 +36,6 @@
 </div>
 <div class="calendar-container" *ngIf="view==='calendar' && calendarEvents.length > 0">
   <div class="calendar-wrapper">
-    <full-calendar *ngIf="calendarEvents.length > 0" defaultView="dayGridMonth" [plugins]="calendarPlugins" [events]="calendarEvents" [fixedWeekCount]="false" [showNonCurrentDates]="false" (eventMouseEnter)="eventRender($event)"></full-calendar>
+    <full-calendar *ngIf="calendarEvents.length > 0" defaultView="dayGridMonth" [plugins]="calendarPlugins" [events]="calendarEvents" [fixedWeekCount]="false" [showNonCurrentDates]="false" (eventMouseEnter)="showEventInfo($event)"></full-calendar>
   </div>
 </div>

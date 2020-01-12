@@ -8,7 +8,7 @@
 
 .appointment-form-header {
     padding: 20px 0;
-    color: $white;
+    color: #c4c4c4;
     font-size: 1.3rem;
     display: flex;
     align-items: center;
@@ -41,15 +41,12 @@
         box-sizing: border-box;
     }
 
-    textarea {
+    textarea, #pet, #type {
+        font-size: 1rem;
         width: 100%;
         box-sizing: border-box;
-    }
-
-    #pet, #type {
-        box-sizing: border-box;
+        color: #7d7d7d;
         padding: 10px;
-        width: 100%;
     }
 }
 
@@ -58,19 +55,21 @@
     align-items: center;
     padding-bottom: 1.2rem;
     margin-right: 20px;
-
+    
     select {
         background: transparent;
         border: none;
         border-bottom: 1px solid rgba(0,0,0,.4);
         outline: none;
         font-size: .9rem;
-        line-height: 2rem;
+        line-height: 1.4rem;
         height: 2rem;
+        font-size: 1rem;
     }
-
+    
     i {
-       opacity: .5;
+        font-size: 1.3rem;
+        opacity: .5;
     }
 }
 
@@ -87,4 +86,14 @@
     outline: none;
     cursor: pointer;
     box-sizing: border-box;
+}
+
+.appointment-field-error {
+    border: 1px solid #ff7878;
+    border-radius: 4px;
+    background: #ffdbdb;
+    font-size: .9rem;
+    font-weight: 100;
+    padding: 10px;
+    margin: 10px 0;
 }

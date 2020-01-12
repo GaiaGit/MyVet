@@ -9,6 +9,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/';
 import { MatFormFieldModule } from '@angular/material/';
 import { MatInputModule } from '@angular/material';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatNativeDateModule } from '@angular/material';
 
 import { AuthService } from '@app/shared/services/auth/auth.service';
@@ -34,7 +35,8 @@ import { AppointmentsComponent } from '@app/pages/appointments/appointments.comp
     MatButtonModule,
     MatFormFieldModule,
     MatNativeDateModule,
-    MatInputModule
+    MatInputModule,
+    MatTooltipModule
   ],
   imports: [
     BrowserModule,
@@ -47,7 +49,8 @@ import { AppointmentsComponent } from '@app/pages/appointments/appointments.comp
     MatButtonModule,
     MatFormFieldModule,
     MatNativeDateModule,
-    MatInputModule
+    MatInputModule,
+    MatTooltipModule
   ],
   providers: [
     AuthService,

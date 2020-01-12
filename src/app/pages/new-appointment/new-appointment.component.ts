@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 
 import { TYPES } from '@assets/data/core';
 
-import { AppointmentsService } from '@app/shared/services/appointment/appointments.service';
 import { ScheduleService } from '@app/shared/services/appointment/schedule.service';
 import { Appointment } from '@app/shared/model/appointment.interface';
 
@@ -16,12 +15,13 @@ import { Appointment } from '@app/shared/model/appointment.interface';
 })
 export class NewAppointmentComponent implements OnInit {
 
-  appointments:Observable<Appointment[]>
+  appointments:Appointment[];
   newAppointment:FormGroup;
   types = TYPES;
   submitted: boolean = false;
   minDate:Date = new Date();
   invalidTime:string="";
+  formError:string;
 
   appointmentTime = [
     {
@@ -80,7 +80,6 @@ export class NewAppointmentComponent implements OnInit {
 
   constructor(
     private scheduleService: ScheduleService,
-    private appointmentsService: AppointmentsService,
     private fb: FormBuilder,
     private router:Router) { }
 
@@ -95,7 +94,7 @@ export class NewAppointmentComponent implements OnInit {
   }
 
   setAppointment(){
-    let fullDate = this.newAppointment.value.date.setHours(this.newAppointment.value.time);
+    let fullDate:Date = this.newAppointment.value.date.setHours(this.newAppointment.value.time);
     return {
       type: this.newAppointment.value.type,
       pet: this.newAppointment.value.pet,
@@ -104,22 +103,41 @@ export class NewAppointmentComponent implements OnInit {
     }
   }
 
-  validateDate() {
-    //let selectedDay=this.newAppointment.value.date.getDay();
-    //let selectedMonth=this.newAppointment.value.date.getMonth();
-    //let selectedYear=this.newAppointment.value.date.getYear();
+  checkEventDates(appointments){
+    let appointmentData = this.setAppointment();
+    let formDate:Date = new Date(appointmentData.date);
+    console.log(appointmentData)
+    console.log(+formDate)
+    
+    let duplicatedAppointment = appointments.filter((event:Appointment)=>{
+      let eventDate:Date = new Date(event.date);
+      return +eventDate == +formDate;
+    });
 
-    //this.appointmentsService.shared$(take(1))
-    //.subscribe(data => {
-    //  data.forEach(event => {
-    //    let day = event.date.getDay()
-    //    let month = event.date.getMonth()
-    //    let year = event.date.getYear()
-    //    if(day === selectedDay && year === selectedYear && month === selectedMonth) return false;
-    //    else return true;
-    //}),error => {
-    //  console.log('Appointments data error')
-    //})
+    if(duplicatedAppointment.length > 0)
+      this.formError = "You already have a similar appointment. Please select a different day or time.";
+
+    else
+      this.createAppointment(appointmentData);
+
+  }
+
+  validateDate() {
+    if(!this.appointments){
+      console.log('load')
+      this.scheduleService.getAppointments().subscribe(
+        data => {
+          this.appointments = data;
+          this.checkEventDates(this.appointments);
+        },
+        error => {
+          this.formError = "There was a problem. Please, try again.";
+        }
+      )
+    } else {
+      console.log('use')
+      this.checkEventDates(this.appointments);
+    }
   }
 
   validateTime(){
@@ -133,24 +151,29 @@ export class NewAppointmentComponent implements OnInit {
     return false;
   }
 
+  createAppointment(appointmentData){  
+    this.scheduleService.createAppointment(appointmentData).subscribe(
+      res => {
+        this.router.navigate(['/']);
+      },
+      error => {
+        console.log(error)
+      }
+    )
+  }
+
   saveAppointment(){
     this.submitted = true;
+
     if(this.newAppointment.valid) {
-      let appointmentData = this.setAppointment();
       
       if(!this.validateTime()){
         this.invalidTime = "Selected time is not valid.";
+        console.log(this.invalidTime)
         return;
       }
 
-      this.scheduleService.createAppointment(this.newAppointment.value).subscribe(
-        res => {
-          this.router.navigate(['/']);
-        },
-        error => {
-          console.log(error)
-        }
-      )
+      this.validateDate()
     }
   }
 

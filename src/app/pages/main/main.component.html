@@ -1,15 +1,15 @@
-<section class="main-section">
+<section class="section-wrapper main-section">
   <div class="appointment-views-wrapper">
     <div class="appointment-top">
-      <button routerLink="/new" routerLinkActive="active" class="appointment-add-button">
+      <button routerLink="/new" routerLinkActive="active" class="appointment-add-button" title="Create new appointment">
         <i class="material-icons md-24">add_box</i>
         NEW APPOINTMENT
       </button>
       <div class="appointment-top-views">
-        <button (click)="toggleView('list')" class="appointment-view-button">
+        <button (click)="toggleView('list')" class="appointment-view-button" title="List">
           <i class="material-icons md-24">list_alt</i>
         </button>
-        <button (click)="toggleView('calendar')" class="appointment-view-button">
+        <button (click)="toggleView('calendar')" class="appointment-view-button" title="Calendar">
           <i class="material-icons md-24">calendar_today</i>
         </button>
       </div>

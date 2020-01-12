@@ -8,12 +8,11 @@ import { Appointment } from '@app/shared/model/appointment.interface';
 })
 export class AppointmentsService {
 
-  private sharing = new BehaviorSubject<Appointment[]>([]);
-
-  shared$ = this.sharing.asObservable();
+  private dataSource = new BehaviorSubject<Appointment[]>([]);
+  currentData$ = this.dataSource.asObservable();
 
   share(events) {
-    this.sharing.next(events);
+    this.dataSource.next(events);
   }
 
   constructor() { }

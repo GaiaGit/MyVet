@@ -1,4 +1,4 @@
-<section class="appointment-section">
+<section class="section-wrapper appointment-section">
   <div class="appointment-form">
     <div class="appointment-form-header">
       <i class="material-icons md-24">add_box</i>
@@ -38,24 +38,32 @@
           </select>
         </div>
         <mat-form-field>
-          <input matInput formControlName="date" [min]="minDate" [matDatepicker]="picker" placeholder="Choose a date">
+          <input matInput formControlName="date" id="date" name="date" [min]="minDate" [matDatepicker]="picker" placeholder="Choose a date">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </div>
-      <div *ngIf="submitted && invalidTime">
-        Invalid time.
+      <div *ngIf="submitted && invalidTime!==''" class="appointment-field-error">
+        {{ invalidTime }}
       </div>
-      <div *ngIf="submitted && (newAppointment.controls.date.errors || newAppointment.controls.time.errors)" class="appointment-field-error">
-        <div *ngIf="newAppointment.controls.date.errors.required || newAppointment.controls.time.errors.required">
-          Date and time are required.
+      <div *ngIf="submitted && (newAppointment.controls.date.errors)" class="appointment-field-error">
+        <div *ngIf="newAppointment.controls.date.errors.required">
+          Date is required.
+        </div>
+      </div>
+      <div *ngIf="submitted && newAppointment.controls.time.errors" class="appointment-field-error">
+        <div *ngIf="newAppointment.controls.time.errors.required">
+          Time is required.
         </div>
       </div>
       <div>
         <label for="comment">
           Comment
         </label>
-        <textarea formControlName="comment" name="comment" id="comment" cols="30" rows="10"></textarea>
+        <textarea formControlName="comment" name="comment" id="comment" cols="30" rows="5"></textarea>
+      </div>
+      <div *ngIf="formError" class="appointment-field-error">
+        {{ formError }}
       </div>
       <div>
         <input class="appointment-form-submit" type="submit" value="SUBMIT">
