@@ -1,5 +1,8 @@
-<div *ngIf="!loading; else spinner">
+<div *ngIf="!loading; else spinner" [ngClass]="{ 'login-bg': router.url.includes('login') }">
   <header [ngClass]="{ 'compact-header': !router.url.includes('login') }">
+    <a routerLink="/" class="base-logo">
+      <span></span>
+    </a>
     <nav>
       <button class="nav-logout" (click)="logout()" *ngIf="!router.url.includes('login')">
         <i class="material-icons md-24">exit_to_app</i>
