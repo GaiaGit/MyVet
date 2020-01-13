@@ -1,11 +1,19 @@
-<header [ngClass]="{ 'compact-header': !router.url.includes('login') }">
-  <nav>
-    <button class="nav-logout" (click)="logout()" *ngIf="!router.url.includes('login')">
-      <i class="material-icons md-24">exit_to_app</i>
-      Log out
-    </button>
-  </nav>
-</header>
-<main>
-  <router-outlet></router-outlet>
-</main>
+<div *ngIf="!loading; else spinner">
+  <header [ngClass]="{ 'compact-header': !router.url.includes('login') }">
+    <nav>
+      <button class="nav-logout" (click)="logout()" *ngIf="!router.url.includes('login')">
+        <i class="material-icons md-24">exit_to_app</i>
+        Log out
+      </button>
+    </nav>
+  </header>
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+</div>
+
+<ng-template #spinner>
+  <div class="">
+    <mat-spinner [diameter]="100" mode="indeterminate"></mat-spinner>LOADING....
+  </div>
+</ng-template>

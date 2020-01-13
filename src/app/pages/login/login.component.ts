@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -9,14 +9,16 @@ import { Credentials } from '@app/shared/model/credentials.model';
 import { Session } from '@app/shared/model/session.model';
 
 import { TESTING_ACCOUNT } from '@assets/data/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
+  subscription:Subscription;
   login: FormGroup;
   submitted: boolean = false;
   loading: boolean = false;
@@ -45,7 +47,7 @@ export class LoginComponent implements OnInit {
 
     if(this.login.valid) {
       this.loading = true;
-      this.authService.login(new Credentials(this.login.value)).subscribe(
+      this.subscription = this.authService.login(new Credentials(this.login.value)).subscribe(
         data => this.validCredentials(data),
         error => this.invalidCredentials(error.error)
       );
@@ -76,5 +78,9 @@ export class LoginComponent implements OnInit {
         password: ''
       })
     }
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

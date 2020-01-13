@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
 
 import { TYPES } from '@assets/data/core';
 
@@ -13,8 +13,9 @@ import { Appointment } from '@app/shared/model/appointment.interface';
   templateUrl: './new-appointment.component.html',
   styleUrls: ['./new-appointment.component.scss']
 })
-export class NewAppointmentComponent implements OnInit {
+export class NewAppointmentComponent implements OnInit, OnDestroy {
 
+  subscription:Subscription;
   appointments:Appointment[];
   newAppointment:FormGroup;
   types = TYPES;
@@ -106,8 +107,6 @@ export class NewAppointmentComponent implements OnInit {
   checkEventDates(appointments){
     let appointmentData = this.setAppointment();
     let formDate:Date = new Date(appointmentData.date);
-    console.log(appointmentData)
-    console.log(+formDate)
     
     let duplicatedAppointment = appointments.filter((event:Appointment)=>{
       let eventDate:Date = new Date(event.date);
@@ -124,8 +123,7 @@ export class NewAppointmentComponent implements OnInit {
 
   validateDate() {
     if(!this.appointments){
-      console.log('load')
-      this.scheduleService.getAppointments().subscribe(
+      this.subscription = this.scheduleService.getAppointments().subscribe(
         data => {
           this.appointments = data;
           this.checkEventDates(this.appointments);
@@ -135,7 +133,6 @@ export class NewAppointmentComponent implements OnInit {
         }
       )
     } else {
-      console.log('use')
       this.checkEventDates(this.appointments);
     }
   }
@@ -143,38 +140,41 @@ export class NewAppointmentComponent implements OnInit {
   validateTime(){
     let today = new Date();
     let now = today.getHours();
-    let selectedTime = this.newAppointment.value.time
-    
-    if(selectedTime > now)
-      return true;
-
-    return false;
+    let selectedTime = this.newAppointment.value.time;
+    let isToday = today.getDate() == this.newAppointment.value.date.getDate() && 
+      today.getMonth() == this.newAppointment.value.date.getMonth() &&
+      today.getFullYear() == this.newAppointment.value.date.getFullYear();
+    return selectedTime > now && isToday || !isToday;
   }
 
   createAppointment(appointmentData){  
-    this.scheduleService.createAppointment(appointmentData).subscribe(
+    this.subscription = this.scheduleService.createAppointment(appointmentData).subscribe(
       res => {
         this.router.navigate(['/']);
       },
       error => {
-        console.log(error)
+        this.formError = error;
       }
     )
   }
 
   saveAppointment(){
     this.submitted = true;
-
+    this.formError = null;
+    
     if(this.newAppointment.valid) {
       
       if(!this.validateTime()){
         this.invalidTime = "Selected time is not valid.";
-        console.log(this.invalidTime)
         return;
       }
 
       this.validateDate()
-    }
+    } 
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

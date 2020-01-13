@@ -1,5 +1,8 @@
+import { throwError, Observable } from 'rxjs';
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { catchError, map } from 'rxjs/operators';
+import { publishReplay, refCount } from 'rxjs/operators';
 import dayGridPlugin from '@fullcalendar/daygrid';
 
 import { ScheduleService } from '@app/shared/services/appointment/schedule.service';
@@ -16,8 +19,9 @@ export class AppointmentsComponent implements OnInit {
 
   @Input() view:string;
 
+  loading:boolean = true;
   views:string;
-  appointments: Appointment[] = [];
+  appointments:Observable<Appointment[]>;
   types = []
   calendarEvents = [];
   placeholder: string = "No appointments found.";
@@ -40,33 +44,35 @@ export class AppointmentsComponent implements OnInit {
   }
 
   toggleComment(id:number){
-    this.selectedEvent = this.selectedEvent === id ? null : id
+    this.selectedEvent = this.selectedEvent === id ? null : id;
   }
 
-  setEvents(data:Appointment[]){
+  setEvents(data){
     data.forEach(ev =>{
-      let evento = {
+      let event = {
         title: ev.pet,
         start: ev.date,
+        comment: ev.comment,
         end: ev.date,
         backgroundColor: this.types[ev.type -1].color
       };
-      this.calendarEvents.push(evento);
+      this.calendarEvents.push(event);
     });
   }
 
   showEventInfo(event){
+    event.el.setAttribute('title', `Pet: ${event.event.title}\nComment: ${event.event.extendedProps.comment || 'No comment'}`);
   }
 
   getAppointmentList(){
-    this.scheduleService.getAppointments().subscribe(
-      data => {
-        this.appointments = data;
-        this.setEvents(data);
-      },
-      error => {
-        this.placeholder = error.error;
-      }
-    )
+
+    this.appointments = this.scheduleService.getAppointments().pipe(publishReplay(1)).pipe(refCount()).pipe(map(data =>{ 
+      this.setEvents(data);
+      return data;
+    })).pipe(
+      catchError(err => {
+        return throwError(err);
+      })
+    );
   }
 }

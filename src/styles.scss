@@ -14,7 +14,6 @@ html, body {
   box-sizing: border-box;
   font-size: 16px;
   font-family: 'Roboto', sans-serif;
-  background-color: $orange;
 }
 
 header {
@@ -29,6 +28,8 @@ header {
   background-repeat: no-repeat;
   justify-content: flex-end;
   background-size: 15%;
+  transition: .5s linear all;
+  background-color: $orange;
 }
 
 header.compact-header {
@@ -43,6 +44,25 @@ main {
 .section-wrapper {
   background-color: $white;
   padding: 50px 0 30px;
+}
+
+.login-wrapper {
+  background-color: #da5326;
+  background-image: url('assets/imgs/hero-login.jpg');
+  background-position: 15% center;
+  background-size: auto 125%;
+  background-repeat: no-repeat;
+  transition: .5s linear all;
+  background-color: $orange;
+}
+
+.loading-spinner {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Calendar */
@@ -62,10 +82,90 @@ main {
   border-radius: 5px;
 }
 
+/* Corner deco */
+
+#corner-top {
+  width: 31rem;
+  height: 30rem;
+  background-color: transparent;
+  position: fixed;
+  top: 0;
+  right: 0;
+  opacity: 1;
+  transition: .5s linear all;
+}
+#corner-top::before,#corner-top::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-color: transparent;
+    border-style: solid;
+}
+#corner-top::before {
+  border-width: 9.5rem 15rem;
+  border-right-color: #ffd740;
+  border-top-color: #ffd740;
+  transition: .5s linear all;
+}
+#corner-bottom {
+  width: 31rem;
+  height: 30rem;
+  background-color: transparent;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  opacity: 1;
+  transition: .5s linear all;
+}
+#corner-bottom::before,#corner-bottom::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-color: transparent;
+    border-style: solid;
+}
+
+#corner-bottom::before {
+  border-width: 6rem 10rem;
+  border-left-color: #ffd740;
+  border-bottom-color: #ffd740;
+  transition: .5s linear all;
+}
+
 /* Screen media size */
 
 @media screen and (max-width: $md-screen){
   html,body{
     font-size: 14px;
+  }
+  
+  header {
+    background-size: 30%;
+  }
+  
+  #corner-top, #corner-bottom {
+    opacity: 0;
+    transition: .5s linear all;
+  }
+  
+  #corner-top::before, #corner-bottom::before {
+    border-width: 0 0;
+    transition: .5s linear all;
+  }
+  
+}
+    
+@media screen and (max-width: $xs-screen){
+  .login-wrapper {
+    background-position: center center;
+    transition: .5s linear all;
+  }
+  
+  .login-wrapper header {
+    background-position: center center;
+    background-size: 60%;
+    transition: .5s linear all;
   }
 }

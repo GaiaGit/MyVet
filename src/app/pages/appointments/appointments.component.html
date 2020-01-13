@@ -1,41 +1,49 @@
-<div *ngIf="view==='list'" class="appointments-list-wrapper">
-<div class="appointments-list-container">
-  <div *ngIf="appointments !== [] > 0; else noResults" class="appointments-list">
-    <div *ngFor="let appoint of appointments; trackBy: id" class="appointments-list-row">
-      <div class="appointment-list-block">
-        <div class="appointment-row-data">
-          <div>  
-            <i class="material-icons md-24" [ngClass]="{ 'appointment-type-emergency': appoint.type === 2, 'appointment-type-grooming': appoint.type === 3, 'appointment-type-routine': appoint.type === 1 }" title="{{displayType(appoint.type)}}">lens</i>
+<div *ngIf="(appointments | async) as appointmentlist; else spinner">
+  <div *ngIf="view==='list'" class="appointments-list-wrapper">
+    <div class="appointments-list-container">
+      <div *ngIf="appointmentlist; else noResults" class="appointments-list">
+        <div *ngFor="let appoint of appointmentlist; trackBy: id" class="appointments-list-row">
+          <div class="appointment-list-block">
+            <div class="appointment-row-data">
+              <div>  
+                <i class="material-icons md-24" [ngClass]="{ 'appointment-type-emergency': appoint.type === 2, 'appointment-type-grooming': appoint.type === 3, 'appointment-type-routine': appoint.type === 1 }" title="{{displayType(appoint.type)}}">lens</i>
+              </div>
+              <div class="appointment-list-notify">
+                <i class="material-icons md-24" title="Comments" *ngIf="appoint.comment">sms</i>
+              </div>
+              <div class="appointment-list-date">
+                {{ appoint.date | date:"mediumDate" }}
+              </div>
+              <div class="appointment-list-time">
+                {{ appoint.date | date: "shortTime" }}
+              </div>
+              <div class="appointment-list-pet">
+                {{ appoint.pet }}
+              </div>
+            </div>
+            <div class="appointment-row-details" (click)="toggleComment(appoint.id)">
+              <i class="material-icons md-24" title="Show details">expand_more</i>
+            </div>
           </div>
-          <div class="appointment-list-notify">
-            <i class="material-icons md-24" title="Comments" *ngIf="appoint.comment">sms</i>
-          </div>
-          <div class="appointment-list-date">
-            {{ appoint.date | date:"mediumDate" }}
-          </div>
-          <div class="appointment-list-time">
-            {{ appoint.date | date: "shortTime" }}
-          </div>
-          <div class="appointment-list-pet">
-            {{ appoint.pet }}
+          <div class="appointment-row-comment" *ngIf="selectedEvent === appoint.id">
+            {{ appoint.comment || "No comments" }}
           </div>
         </div>
-        <div class="appointment-row-details" (click)="toggleComment(appoint.id)">
-          <i class="material-icons md-24" title="Show details">expand_more</i>
-        </div>
       </div>
-      <div class="appointment-row-comment" *ngIf="selectedEvent === appoint.id">
-        {{ appoint.comment || "No comments" }}
-      </div>
+      <ng-template #noResults>
+        {{ placeholder }}
+      </ng-template>
     </div>
   </div>
-  <ng-template #noResults>
-    {{ placeholder }}
-  </ng-template>
-</div>
-</div>
-<div class="calendar-container" *ngIf="view==='calendar' && calendarEvents.length > 0">
-  <div class="calendar-wrapper">
-    <full-calendar *ngIf="calendarEvents.length > 0" defaultView="dayGridMonth" [plugins]="calendarPlugins" [events]="calendarEvents" [fixedWeekCount]="false" [showNonCurrentDates]="false" (eventMouseEnter)="showEventInfo($event)"></full-calendar>
+  <div class="calendar-container" *ngIf="view==='calendar' && calendarEvents.length > 0">
+    <div class="calendar-wrapper">
+      <full-calendar *ngIf="calendarEvents.length > 0" defaultView="dayGridMonth" [plugins]="calendarPlugins" [events]="calendarEvents" [fixedWeekCount]="false" [showNonCurrentDates]="false" (eventMouseEnter)="showEventInfo($event)"></full-calendar>
+    </div>
   </div>
 </div>
+
+<ng-template #spinner>
+  <div class="loading-spinner">
+    <mat-spinner [diameter]="100" mode="indeterminate"></mat-spinner>LOADING....
+  </div>
+</ng-template>

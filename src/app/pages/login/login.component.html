@@ -1,8 +1,7 @@
+<div id="corner-top"></div>
+  <div id="corner-bottom"></div>
 <section id="section-login">
   <div class="login-box">
-    <div class="login-error" *ngIf="submitted && failAuth">
-      {{ failAuth }}
-    </div>
     <div class="login-form-container">
       <form id="loginForm" [formGroup]="login" (ngSubmit)="submitLogin()">
         <div class="form-group">
@@ -35,6 +34,10 @@
               Password is required.
             </div>
           </div>
+        </div>
+          
+        <div class="login-error" *ngIf="submitted && failAuth" class="login-field-error">
+          {{ failAuth }}
         </div>
 
         <button type="submit" class="login-button">LOG IN</button>

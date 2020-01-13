@@ -62,7 +62,7 @@
         </label>
         <textarea formControlName="comment" name="comment" id="comment" cols="30" rows="5"></textarea>
       </div>
-      <div *ngIf="formError" class="appointment-field-error">
+      <div *ngIf="formError && submitted" class="appointment-field-error">
         {{ formError }}
       </div>
       <div>
