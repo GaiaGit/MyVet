@@ -1,4 +1,4 @@
-import { Component, AfterContentInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSpinner } from '@angular/material';
 
@@ -9,19 +9,12 @@ import { SessionService } from '@app/shared/services/session/session.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements AfterContentInit {
+export class AppComponent implements OnInit {
   title = 'MyVet App';
-  loading:boolean;
 
   constructor(public router:Router, public sessionService:SessionService){}
 
-  ngOnInit() {   
-    this.loading = true;
-  }
-
-  ngAfterContentInit(){
-    this.loading = false;
-  }
+  ngOnInit() { }
 
   logout() {
     this.sessionService.logout();

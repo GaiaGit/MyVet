@@ -23,6 +23,7 @@ export class NewAppointmentComponent implements OnInit, OnDestroy {
   minDate:Date = new Date();
   invalidTime:string="";
   formError:string;
+  loading:boolean = false;
 
   appointmentTime = [
     {
@@ -113,8 +114,10 @@ export class NewAppointmentComponent implements OnInit, OnDestroy {
       return +eventDate == +formDate;
     });
 
-    if(duplicatedAppointment.length > 0)
+    if(duplicatedAppointment.length > 0){
       this.formError = "You already have a similar appointment. Please select a different day or time.";
+      this.loading = false;
+    }
 
     else
       this.createAppointment(appointmentData);
@@ -129,6 +132,7 @@ export class NewAppointmentComponent implements OnInit, OnDestroy {
           this.checkEventDates(this.appointments);
         },
         error => {
+          this.loading = false;
           this.formError = "There was a problem. Please, try again.";
         }
       )
@@ -153,6 +157,7 @@ export class NewAppointmentComponent implements OnInit, OnDestroy {
         this.router.navigate(['/']);
       },
       error => {
+        this.loading = false;
         this.formError = error;
       }
     )
@@ -161,16 +166,19 @@ export class NewAppointmentComponent implements OnInit, OnDestroy {
   saveAppointment(){
     this.submitted = true;
     this.formError = null;
+    this.loading = true;
     
     if(this.newAppointment.valid) {
       
       if(!this.validateTime()){
         this.invalidTime = "Selected time is not valid.";
+        this.loading = false;
         return;
       }
 
       this.validateDate()
-    } 
+    }
+    this.loading = false;
   }
 
   ngOnDestroy() {

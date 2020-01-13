@@ -1,4 +1,4 @@
-<div *ngIf="!loading; else spinner" [ngClass]="{ 'login-bg': router.url.includes('login') }">
+<div [ngClass]="{ 'login-bg': router.url.includes('login') }">
   <header [ngClass]="{ 'compact-header': !router.url.includes('login') }">
     <a routerLink="/" class="base-logo">
       <span></span>
@@ -14,9 +14,3 @@
     <router-outlet></router-outlet>
   </main>
 </div>
-
-<ng-template #spinner>
-  <div class="">
-    <mat-spinner [diameter]="100" mode="indeterminate"></mat-spinner>LOADING....
-  </div>
-</ng-template>

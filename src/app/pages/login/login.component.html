@@ -40,7 +40,9 @@
           {{ failAuth }}
         </div>
 
-        <button type="submit" class="login-button">LOG IN</button>
+        <button type="submit" class="login-button" [disabled]="loading" [ngClass]="{ 'verify-button': loading }">
+          {{ !loading ? "LOG IN" : "Verifying..." }}
+        </button>
 
         <div class="login-filler">
           <input type="checkbox" id="default" (change)="setTestingAccount()"> Use testing account

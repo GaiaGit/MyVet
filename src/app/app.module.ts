@@ -11,7 +11,6 @@ import { MatFormFieldModule } from '@angular/material/';
 import { MatInputModule } from '@angular/material';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatNativeDateModule } from '@angular/material';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AuthService } from '@app/shared/services/auth/auth.service';
 import { ScheduleService } from '@app/shared/services/appointment/schedule.service';
@@ -37,8 +36,7 @@ import { AppointmentsComponent } from '@app/pages/appointments/appointments.comp
     MatFormFieldModule,
     MatNativeDateModule,
     MatInputModule,
-    MatTooltipModule,
-    MatProgressSpinnerModule
+    MatTooltipModule
   ],
   imports: [
     BrowserModule,
@@ -52,8 +50,7 @@ import { AppointmentsComponent } from '@app/pages/appointments/appointments.comp
     MatFormFieldModule,
     MatNativeDateModule,
     MatInputModule,
-    MatTooltipModule,
-    MatProgressSpinnerModule
+    MatTooltipModule
   ],
   providers: [
     AuthService,

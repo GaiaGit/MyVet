@@ -66,7 +66,7 @@
         {{ formError }}
       </div>
       <div>
-        <input class="appointment-form-submit" type="submit" value="SUBMIT">
+        <input class="appointment-form-submit" [disabled]="loading" [ngClass]="{ 'verify-button': loading }" type="submit" value="{{!loading ? 'SUBMIT' : 'Sending...'}}">
       </div>
     </form>
   </div>
